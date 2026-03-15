@@ -25,12 +25,29 @@
     </style>
 </head>
 <body class="bg-[#F8FAFC]">
-    <header>
-        <section class="max-w-6xl mx-auto w-11/12">
-            
+    <header class="min-h-screen flex items-center justify-center bg-base-100">
+        <section class="max-w-md w-11/12">
+            <div class="bg-white shadow-xl rounded-xl p-8 space-y-3 text-center">
+                <div>
+                    <img class="w-[100px] mx-auto" src="./assets/github-logo.png" alt="">
+                    <h3 class="font-semibold text-[#1F2937] text-2xl mt-2">GitHub Issues Tracker</h3>
+                    <p class="text-[#64748B] text-[16px]">Sign in to manage your issues</p>
+                </div> 
+                <div>
+                    <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-xs p-4 mx-auto">
+                        <label class="label font-medium text-[#1F2937]">Username</label>
+                        <input id="input-username" type="text" class="input" placeholder="Enter Username" />
+                        <label class="label text-primary">Default: admin</label>
+                        <label class="label font-medium text-[#1F2937]">Password</label>
+                        <input id="input-password" type="password" class="input" placeholder="Enter Password" />
+                        <label class="label text-primary">Default: admin123</label>
+                        <button id="btn-login" class="btn btn-primary mt-4 w-full">Sign In</button>
+                    </fieldset>
+                </div>
+            </div>
         </section>
     </header>
 
-    <script src="./script/script.js"></script>
+    <script src="./script/login.js"></script>
 </body>
 </html>
