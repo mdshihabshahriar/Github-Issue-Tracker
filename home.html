@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/logo.webp" type="image/x-icon">
 
     <!-- tailwind + daisy -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
@@ -28,11 +28,11 @@
     <header>
         <section class="">
             <div class="navbar bg-base-100 shadow-sm flex-col md:flex-row md:items-center md:justify-between space-y-2">
-                <div class="flex-1 flex">
+                <div class="flex-1 flex md:mx-15">
                     <img class="w-[36px]" src="./assets/github-logo.png" alt="" srcset="">
                     <span class="btn btn-ghost text-2xl font-semibold">GitHub Issues Tracker</span>
                 </div>
-                <div class="flex space-x-3">
+                <div class="flex space-x-3 md:mx-15">
                     <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
                     <input type="text" placeholder="Search issues" class="input input-bordered w-full md:w-auto" />
                     <button class="btn btn-primary">+ New Issue</button>
@@ -40,6 +40,58 @@
             </div>
         </section>
     </header>
+
+    <main>
+        <section class=" max-w-[1110px] mx-auto w-11/12 py-10">
+            <div class="shadow-sm bg-base-100 p-6 space-x-2">
+                <button class="btn font-medium text-[16px] text-[#64748B]">All</button>
+                <button class="btn font-medium text-[16px] text-[#64748B]">Open</button>
+                <button class="btn font-medium text-[16px] text-[#64748B]">Close</button>
+            </div>
+        </section>
+
+        <section class=" max-w-[1110px] mx-auto w-11/12 py-2">
+            <div class="shadow-sm bg-base-100 p-6 flex justify-between">
+                <div class="flex items-center space-x-3">
+                    <img class="w-[27px] h-[27px] bg-[#ECE4FF] rounded-full" src="./assets/Aperture.png" alt="">
+                    <div class="">
+                        <h4 class="font-semibold text-[#1F2937] text-xl">50 Issues</h4>
+                        <p class="text-[16px] text=[#64748B]">Track and manage your project issues</p>
+                    </div>
+                </div>
+                <div class="flex space-x-4 items-center">
+                    <i class="fa-solid fa-circle" style="color: #00A96E;"></i>
+                    <p class="text-[16px] font-medium">Open</p>
+                    <i class="fa-solid fa-circle" style="color: #A855F7;"></i>
+                    <p class="text-[16px] font-medium">Close</p>
+                </div>
+            </div>
+        </section>
+
+        <section class=" max-w-[1110px] bg-base-100 mx-auto w-11/12 py-1">
+            <div class="card-container grid grid-cols-4 p-6 space-x-3 space-y-3 shadow-xl">
+               <div class="card bg-base-100 space-y-3 shadow-xl p-4 border-t-4 border-[#00A96E]">
+                    <div class="flex justify-between">
+                        <img src="./assets/Open-Status.png" alt="">
+                        <span class="bg-red-100 rounded-xl text-[#EF4444] px-2">HIGH</span>
+                    </div>
+                    <div class="space-y-3">
+                        <h4 class="font-semibold text-[#1F2937] text-[14px]">Fix navigation menu on mobile devices</h4>
+                        <p class="text-[#64748B] text-xs">The navigation menu doesn't collapse properly on mobile devices...</p>
+                        <span class="bg-red-100 rounded-xl text-[#EF4444] px-2 text-xs">BUG</span>
+                        <span class="bg-yellow-100 text-[#D97706] px-2 text-xs">HELP WANTED</span>
+                    </div>
+                    <div>
+                        <hr class="border-gray-200">
+                    </div>
+                    <div class="space-y-3">
+                        <p class="text-[#64748B] text-xs">#1 by john_doe</p>
+                        <p class="text-[#64748B] text-xs">1/15/2024</p>
+                    </div>
+               </div>
+            </div>
+        </section>
+    </main>
         
     <script src="./script/script.js"></script>
 </body>
