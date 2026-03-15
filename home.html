@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Home</title>
     <link rel="shortcut icon" href="./assets/logo.webp" type="image/x-icon">
 
     <!-- tailwind + daisy -->
@@ -28,9 +28,9 @@
     <header>
         <section class="">
             <div class="navbar bg-base-100 shadow-sm flex-col md:flex-row md:items-center md:justify-between space-y-2">
-                <div class="flex-1 flex md:mx-15">
+                <div class="flex-1 flex md:mx-15 gap-2">
                     <img class="w-[36px]" src="./assets/github-logo.png" alt="" srcset="">
-                    <span class="btn btn-ghost text-2xl font-semibold">GitHub Issues Tracker</span>
+                    <span class="text-2xl font-semibold items-center">GitHub Issues Tracker</span>
                 </div>
                 <div class="flex space-x-3 md:mx-15">
                     <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
@@ -44,9 +44,9 @@
     <main>
         <section class=" max-w-[1110px] mx-auto w-11/12 py-10">
             <div class="shadow-sm bg-base-100 p-6 space-x-2">
-                <button class="btn font-medium text-[16px] text-[#64748B]">All</button>
-                <button class="btn font-medium text-[16px] text-[#64748B]">Open</button>
-                <button class="btn font-medium text-[16px] text-[#64748B]">Close</button>
+                <button id="tab-all" class="btn font-medium text-[16px] text-[#64748B]">All</button>
+                <button id="tab-open" class="btn font-medium text-[16px] text-[#64748B]">Open</button>
+                <button id="tab-close" class="btn font-medium text-[16px] text-[#64748B]">Close</button>
             </div>
         </section>
 
@@ -55,7 +55,7 @@
                 <div class="flex items-center space-x-3">
                     <img class="w-[27px] h-[27px] bg-[#ECE4FF] rounded-full" src="./assets/Aperture.png" alt="">
                     <div class="">
-                        <h4 class="font-semibold text-[#1F2937] text-xl">50 Issues</h4>
+                        <h4 id="count-issue" class="font-semibold text-[#1F2937] text-xl">50 Issues</h4>
                         <p class="text-[16px] text=[#64748B]">Track and manage your project issues</p>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
         </section>
 
         <section class=" max-w-[1110px] bg-base-100 mx-auto w-11/12 py-1">
-            <div class="card-container grid grid-cols-4 p-6 space-x-3 space-y-3 shadow-xl">
+            <div id="card-container" class="grid grid-cols-3 p-6 space-x-3 space-y-3 shadow-xl">
                <div class="card bg-base-100 space-y-3 shadow-xl p-4 border-t-4 border-[#00A96E]">
                     <div class="flex justify-between">
                         <img src="./assets/Open-Status.png" alt="">
