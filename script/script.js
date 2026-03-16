@@ -167,6 +167,7 @@ document.getElementById("btn-search").addEventListener("click",()=>{
         const allWords = data.data
         console.log(allWords)
         const filterWords = allWords.filter(issue=>issue.title.toLowerCase().includes(searchText))
+        switchTab("all");
         displayCard(filterWords)
         manageSpinner(false)
         input.value = "";
