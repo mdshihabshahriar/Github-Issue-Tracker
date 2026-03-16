@@ -169,6 +169,7 @@ document.getElementById("btn-search").addEventListener("click",()=>{
         const filterWords = allWords.filter(issue=>issue.title.toLowerCase().includes(searchText))
         displayCard(filterWords)
         manageSpinner(false)
+        input.value = "";
     });
 })
 
