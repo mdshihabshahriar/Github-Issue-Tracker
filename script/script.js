@@ -10,6 +10,19 @@ const displayCard = (data) =>{
     const cardContainer = document.getElementById("card-container")
     cardContainer.innerHTML = ""
 
+    if(data.length == 0)
+    {
+        cardContainer.innerHTML = `
+       <div class="col-span-full flex flex-col items-center justify-center py-20 text-center">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold text-gray-700">No Issues Found</h2>
+                <p class="text-gray-500">Try searching with a different keyword.</p>
+            </div>
+        </div>
+        `
+        return;
+    }
+
     data.forEach(d => {
         const card = document.createElement("div")
         card.innerHTML = `
@@ -81,7 +94,7 @@ const displayCardDetails = (data) =>{
                 <p class="text-[#64748B] text-[16px]">Assignee:</p>
                 <p class="font-semibold text-[#1F2937] text-[16px]">${data.assignee}</p>
             </div>
-            <div>
+            <div class="space-y-1">
                 <p class="text-[#64748B] text-[16px]">Priority:</p>
                 <span class="font-medium text-[#FFFFFF] bg-red-500 text-[12px] rounded-xl p-2">${data.priority.toUpperCase()}</span>
             </div>
@@ -144,3 +157,17 @@ function switchTab(tab){
     }
     updateStat();
 }
+
+document.getElementById("btn-search").addEventListener("click",()=>{
+    const input = document.getElementById("input-search")
+    const searchText = input.value.trim().toLowerCase()
+    console.log(searchText)
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`)
+    .then(res=>res.json())
+    .then(data=>{
+        const allWords = data.data
+        console.log(allWords)
+        const filterWords = allWords.filter(issue=>issue.title.toLowerCase().includes(searchText))
+        displayCard(filterWords)
+    })
+})
