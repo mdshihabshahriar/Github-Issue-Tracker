@@ -11,6 +11,19 @@ const createElements = (arr) =>{
     return htmlElements.join(" ")
 }
 
+const manageSpinner = (status)=>{
+    if(status == true)
+    {
+        document.getElementById("spinner").classList.remove("hidden")
+        document.getElementById("card-container").classList.add("hidden")
+    }
+    else
+    {
+        document.getElementById("card-container").classList.remove("hidden")
+        document.getElementById("spinner").classList.add("hidden")
+    }
+}
+
 const displayCard = (data) =>{
     const cardContainer = document.getElementById("card-container")
     cardContainer.innerHTML = ""
@@ -84,18 +97,7 @@ const displayCard = (data) =>{
     });
 }
 
-loadCard()
-
-const countIssue = ()=>{
-    fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-    .then(res => res.json())
-    .then(data =>{
-        const issues = data.data
-        document.getElementById("count-issue").innerText = issues.length + " Issues"
-    })
-}
-
-countIssue();
+loadCard();
 
 const loadDetail = async (id)=>{
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`
@@ -141,7 +143,7 @@ const displayCardDetails = (data) =>{
         <div class="flex space-x-30">
             <div class="space-y-1">
                 <p class="text-[#64748B] text-[16px]">Assignee:</p>
-                <p class="font-semibold text-[#1F2937] text-[16px]">${data.assignee}</p>
+                <p class="font-semibold text-[#1F2937] text-[16px]">${data.assignee ? data.assignee : "Not Available"}</p>
             </div>
             <div class="space-y-1">
                 <p class="text-[#64748B] text-[16px]">Priority:</p>
@@ -157,6 +159,7 @@ const displayCardDetails = (data) =>{
 document.getElementById("btn-search").addEventListener("click",()=>{
     const input = document.getElementById("input-search")
     const searchText = input.value.trim().toLowerCase()
+    manageSpinner(true)
     console.log(searchText)
     fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`)
     .then(res=>res.json())
@@ -165,12 +168,14 @@ document.getElementById("btn-search").addEventListener("click",()=>{
         console.log(allWords)
         const filterWords = allWords.filter(issue=>issue.title.toLowerCase().includes(searchText))
         displayCard(filterWords)
-    })
+        manageSpinner(false)
+    });
 })
 
 let allIssues = [];
 
 const switchTab = (tab) => {
+    manageSpinner(true);
     const tabs = ["all", "open", "close"];
 
     // button active 
@@ -196,6 +201,7 @@ const switchTab = (tab) => {
     }
 
     displayCard(filtered);
+    manageSpinner(false);
 };
 
 const fetchIssues = () => {
