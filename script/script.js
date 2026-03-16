@@ -6,6 +6,11 @@ const loadCard = ()=>{
     .then(data => displayCard(data.data))
 }
 
+const createElements = (arr) =>{
+    const htmlElements = arr.map(el => `<span class="bg-yellow-100 rounded-xl text-[#D97706] px-2 text-xs">${el}</span>`)
+    return htmlElements.join(" ")
+}
+
 const displayCard = (data) =>{
     const cardContainer = document.getElementById("card-container")
     cardContainer.innerHTML = ""
@@ -28,19 +33,43 @@ const displayCard = (data) =>{
 
     data.forEach(d => {
         const borderColor = d.status === "open" ? "border-[#00A96E]" : "border-[#A855F7]";
+
+        let priorityColor = "";
+        if(d.priority.toLowerCase() === "high")
+        {
+            priorityColor = "bg-red-100 text-[#EF4444]";
+        } 
+        else if(d.priority.toLowerCase() === "medium")
+        {
+            priorityColor = "bg-yellow-100 text-[#D97706]";
+        }
+        else 
+        { 
+            priorityColor = "bg-gray-100 text-[#9CA3AF]";
+        }
+
+        let statusIcon = "";
+
+        if(d.status === "open")
+        {
+            statusIcon = "./assets/Open-Status.png";
+        }
+        else
+        {
+            statusIcon = "./assets/Closed- Status .png";
+        }
+
         const card = document.createElement("div")
         card.innerHTML = `
-                <div onclick="loadDetail(${d.id})" class="card bg-base-100 space-y-3 shadow-xl p-4 border-t-4 ${borderColor}">
+                <div onclick="loadDetail(${d.id})" class="card bg-base-100 space-y-3 shadow-xl p-4 border-t-4 ${borderColor} cursor-pointer">
                     <div class="flex justify-between">
-                        <img src="./assets/Open-Status.png" alt="">
-                        <span class="bg-red-100 rounded-xl text-[#EF4444] px-2">${d.priority.toUpperCase()}</span>
+                        <img src="${statusIcon}" alt="">
+                        <span class="rounded-xl ${priorityColor} px-2">${d.priority.toUpperCase()}</span>
                     </div>
                     <div class="space-y-3">
                         <h4 class="font-semibold text-[#1F2937] text-[14px]">${d.title}</h4>
                         <p class="text-[#64748B] text-xs">${d.description}</p>
-                        <span class="bg-red-100 rounded-xl text-[#EF4444] px-2 text-xs">${d.labels[0]?.toUpperCase() || ""}</span>
-                        <span class="bg-yellow-100 text-[#D97706] px-2 text-xs">
-                        ${d.labels[1]?.toUpperCase() || ""}</span>
+                        ${createElements(d.labels)}
                     </div>
                     <div>
                         <hr class="border-gray-200">
@@ -78,17 +107,33 @@ const loadDetail = async (id)=>{
 
 const displayCardDetails = (data) =>{
     console.log(data)
+
+    let priorityColor = "";
+    if(data.priority.toLowerCase() === "high")
+    {
+        priorityColor = "bg-red-500";
+    } 
+    else if(data.priority.toLowerCase() === "medium")
+    {
+        priorityColor = "bg-yellow-500";
+    }
+    else 
+    { 
+        priorityColor = "bg-gray-500";
+    }
+
+    const statusColor = data.status === "open" ? "bg-[#00A96E]" : "bg-[#A855F7]";
+
     const detailsBox = document.getElementById("details-container")
     detailsBox.innerHTML = `
         <div class="space-y-2">
             <h4 class="font-bold text-2xl text-[#1F2937]">${data.title}</h4>
-            <span class="font-medium text-[#ffffff] bg-[#00A96E] p-2 rounded-xl">${data.status.toUpperCase()}</span>
-            <span class="text-[#64748B] text-xs">Opened by ${data.assignee}</span>
-            <span class="text-[#64748B] text-xs">${data.createdAt}</span>
+            <span class="font-medium text-[#ffffff] ${statusColor} p-2 rounded-xl text-xs">${data.status.toUpperCase()}</span>
+            <span class="text-[#64748B] text-xs"> • Opened by ${data.assignee}</span>
+            <span class="text-[#64748B] text-xs"> • ${data.createdAt}</span>
         </div>
         <div>
-            <span class="bg-red-100 rounded-xl text-[#EF4444] px-2 text-xs">${data.labels[0]?.toUpperCase() || ""}</span>
-            <span class="bg-yellow-100 text-[#D97706] px-2 text-xs">${data.labels[1]?.toUpperCase() || ""}</span>
+            ${createElements(data.labels)}
         </div>
         <div>
             <p class="text-[#64748B] text-[16px]">${data.description}</p>
@@ -100,7 +145,7 @@ const displayCardDetails = (data) =>{
             </div>
             <div class="space-y-1">
                 <p class="text-[#64748B] text-[16px]">Priority:</p>
-                <span class="font-medium text-[#FFFFFF] bg-red-500 text-[12px] rounded-xl p-2">${data.priority.toUpperCase()}</span>
+                <span class="font-medium text-[#FFFFFF] ${priorityColor} text-[12px] rounded-xl p-2">${data.priority.toUpperCase()}</span>
             </div>
         </div>
     
