@@ -9,6 +9,9 @@ const loadCard = ()=>{
 const displayCard = (data) =>{
     const cardContainer = document.getElementById("card-container")
     cardContainer.innerHTML = ""
+    
+    // update count
+    document.getElementById("count-issue").innerText = data.length + " Issues"
 
     if(data.length == 0)
     {
@@ -24,9 +27,10 @@ const displayCard = (data) =>{
     }
 
     data.forEach(d => {
+        const borderColor = d.status === "open" ? "border-[#00A96E]" : "border-[#A855F7]";
         const card = document.createElement("div")
         card.innerHTML = `
-                <div onclick="loadDetail(${d.id})" class="card bg-base-100 space-y-3 shadow-xl p-4 border-t-4 border-[#00A96E]">
+                <div onclick="loadDetail(${d.id})" class="card bg-base-100 space-y-3 shadow-xl p-4 border-t-4 ${borderColor}">
                     <div class="flex justify-between">
                         <img src="./assets/Open-Status.png" alt="">
                         <span class="bg-red-100 rounded-xl text-[#EF4444] px-2">${d.priority.toUpperCase()}</span>
@@ -104,59 +108,6 @@ const displayCardDetails = (data) =>{
     document.getElementById("card_modal").showModal()
 }
 
-function switchTab(tab){
-    console.log(tab);
-    const tabs = ["all", "open", "close"];
-    currentTab = tab;
-
-    for(const t of tabs){
-        const tabName = document.getElementById("tab-"+t);
-        if(t === tab)
-        {
-            tabName.classList.add("btn-neutral");
-            tabName.classList.remove("bg-white");
-        }
-        else
-        {
-            tabName.classList.remove("btn-neutral");
-            tabName.classList.add("bg-white");
-        }
-    }
-
-    const pages = [allContainer, interviewContainer, rejectedContainer];
-
-    for(const section of pages)
-    {
-        section.classList.add("hidden");
-    }
-    emptyState.classList.add("hidden"); 
-
-    if(tab === "all")
-    {
-        allContainer.classList.remove("hidden");
-        if(allContainer.children.length < 1)
-        {
-            emptyState.classList.remove("hidden");
-        }
-    }
-    else if(tab === "interview")
-    {
-        interviewContainer.classList.remove("hidden");
-        if(interviewContainer.children.length < 1)
-        {
-            emptyState.classList.remove("hidden");
-        }
-    }
-    else
-    {
-        rejectedContainer.classList.remove("hidden");
-        if(rejectedContainer.children.length < 1)
-        {
-            emptyState.classList.remove("hidden");
-        }
-    }
-    updateStat();
-}
 
 document.getElementById("btn-search").addEventListener("click",()=>{
     const input = document.getElementById("input-search")
@@ -171,3 +122,48 @@ document.getElementById("btn-search").addEventListener("click",()=>{
         displayCard(filterWords)
     })
 })
+
+let allIssues = [];
+
+const switchTab = (tab) => {
+    const tabs = ["all", "open", "close"];
+
+    // button active 
+    for(const t of tabs){
+        const tabBtn = document.getElementById("tab-" + t);
+        if(t === tab){
+            tabBtn.classList.add("btn-primary");
+            tabBtn.classList.remove("bg-white");
+        } else {
+            tabBtn.classList.remove("btn-primary");
+            tabBtn.classList.add("bg-white");
+        }
+    }
+
+    // filter issues
+    let filtered = [];
+    if(tab === "all"){
+        filtered = allIssues;
+    } else if(tab === "open"){
+        filtered = allIssues.filter(i => i.status === "open");
+    } else if(tab === "close"){
+        filtered = allIssues.filter(i => i.status === "closed");
+    }
+
+    displayCard(filtered);
+};
+
+const fetchIssues = () => {
+    fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+        .then(res => res.json())
+        .then(data => {
+            allIssues = data.data; // save all issues
+            switchTab("all");      // initially all
+        });
+};
+
+fetchIssues()
+
+document.getElementById("tab-all").addEventListener("click", () => switchTab("all"));
+document.getElementById("tab-open").addEventListener("click", () => switchTab("open"));
+document.getElementById("tab-close").addEventListener("click", () => switchTab("close"));
